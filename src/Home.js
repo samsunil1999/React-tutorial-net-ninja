@@ -4,27 +4,37 @@ import BlogList from "./BlogList";
 const Home = () => {
 
     const [blogs, setBlogs] = useState(null);
-    const [isPending, setIsPending] = useState(true); // For showing the loading text before we get the data from the API.
+    const [isPending, setIsPending] = useState(true);
+    const [error, setError] = useState(null);
 
-    // Since this useEffect hook does not depends on any state therefor this fucntion will be invoked when the component is loaded for the frst time. 
     useEffect(() => {
-        setTimeout(() => { // used setTimeout here to mimic delay before we get the data from the API.
+        setTimeout(() => {
             fetch('http://localhost:8000/blogs')
-            .then(res => {
-                return res.json();
-            })
-            .then(data => {
-                console.log(data);
-                setBlogs(data)
-                setIsPending(false);
-            })
+                .then(res => {
+                    if (!res.ok) { 
+                        throw Error('Could not fetch the blogs data');
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    setBlogs(data); 
+                    setIsPending(false);
+                    setError(null); 
+                })
+                .catch(err => {
+                    if (err.name === 'TypeError') {
+                        setError('Failed to fetch. Please check your network connection or the server status.');
+                    } else {
+                        setError(err.message);
+                    }
+                    setIsPending(false);
+                });
         }, 1000);
     },[]) 
 
     return (
         <div className="home">
-            {/* These are conditional loading messages where JS will check if the first condition is true if yes then
-             it executes the second condition i.e. the HTML */}
+            {error && <div>{error}</div>}
             {isPending && <div>Loading...</div>} 
             {blogs && <BlogList blogs={blogs} title="All Blogs!"/>}
         </div>

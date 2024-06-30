@@ -1,36 +1,12 @@
 import { useState, useEffect } from "react";
 import BlogList from "./BlogList";
+import useFetch from "./UseFetch";
 
 const Home = () => {
 
-    const [blogs, setBlogs] = useState(null);
-    const [isPending, setIsPending] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        setTimeout(() => {
-            fetch('http://localhost:8000/blogs')
-                .then(res => {
-                    if (!res.ok) { 
-                        throw Error('Could not fetch the blogs data');
-                    }
-                    return res.json();
-                })
-                .then(data => {
-                    setBlogs(data); 
-                    setIsPending(false);
-                    setError(null); 
-                })
-                .catch(err => {
-                    if (err.name === 'TypeError') {
-                        setError('Failed to fetch. Please check your network connection or the server status.');
-                    } else {
-                        setError(err.message);
-                    }
-                    setIsPending(false);
-                });
-        }, 1000);
-    },[]) 
+    // The order of the returned parameters do not matter
+    // and blogs variable was returned as data there use --> data: blogs 
+    const {isPending, data: blogs, error} = useFetch('http://localhost:8000/blogs')
 
     return (
         <div className="home">

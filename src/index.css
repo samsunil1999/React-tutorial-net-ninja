@@ -105,6 +105,10 @@
   display: block;
 }
 
+.create textarea {
+  overflow-y: scroll;
+}
+
 .create button {
   border: none;
   color: white;

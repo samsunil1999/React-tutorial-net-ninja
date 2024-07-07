@@ -1,0 +1,14 @@
+JSON Server is a Node Module that you can use to create demo REST API services within a short span of minutes. All we need to do is have a JSON file as sample data. 
+
+Installation:
+
+npm install -g json-server
+by this we can install the node package and store it locally in our react app.
+
+OR 
+
+npx json-server --watch data/db.json --port 8000
+this will just import the package from the web directly. This is what we have done here in our app.
+
+--watch will watch the path of the data i.e. the data which will act as the DB for our demo APIs.
+--port assigns the port for the json-server service. (by default it will assign 3000 but out react app will be running in port 3000)

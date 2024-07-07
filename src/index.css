@@ -55,7 +55,7 @@
 }
 
 .blog-preview:hover {
-  box-shadow: 1px 3px 5px rgba(0,0,0,0.2);
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.2);
 }
 
 .blog-preview h3 {
@@ -68,7 +68,7 @@
   text-decoration: none;
 }
 
-.blog-details h2{
+.blog-details h2 {
   font-size: 20px;
   color: #f1356d;
   margin-bottom: 10px;
@@ -107,7 +107,9 @@
 }
 
 
-.create input, .create textarea, .create select {
+.create input,
+.create textarea,
+.create select {
   width: 100%;
   padding: 6px 10px;
   margin: 1-px 0;
@@ -128,4 +130,10 @@
   padding: 8px;
   border-radius: 8px;
   cursor: pointer;
+}
+
+.not-found h2 {
+  font-size: 20px;
+  color: #f1356d;
+  margin-bottom: 10px;
 }

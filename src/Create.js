@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 const Create = () => {
     const [title, setTitle] = useState('');
@@ -6,30 +7,34 @@ const Create = () => {
     const [author, setAuthor] = useState('mario');
 
     const [isPending, setIsPending] = useState(false);
+    // useHistory is used to create the history object which will have the list of all the routes visited 
+    // this also helps to programatically redirect from one route to another....
+    const history = useHistory(); 
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const blog = { title, body, author };
 
         setIsPending(true);
-        console.log('is pending true');
 
-        setTimeout(() => { // Here settimeout is just used to delay the fetch API call and we could see the loading message in the button
-            // Fetch API called with the method, headers and body
+        setTimeout(() => {
             fetch('http://localhost:8000/blogs', {
                 method: 'POST',
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(blog)
             }).then(() => {
                 console.log('New blog added');
+                
+                // history.go() method is used
+                // history.go(-1);
+
+                history.push('/'); // redirecting to the home route path on successful completion of the fetch API call.
             })
+            
             setIsPending(false);
-            console.log('is pending false');
         },1000)
-        
-        
-        
     }
+
 
     return (
         <div className="create">
@@ -56,7 +61,6 @@ const Create = () => {
                     <option value="mario">Mario</option>
                     <option value="yoshi">Yoshi</option>
                 </select>
-                {/* A button to submit and add a blog into the data */}
                 {!isPending && <button>Add Blog</button>} 
                 {isPending && <button disabled>Loading...</button>} 
             </form>
